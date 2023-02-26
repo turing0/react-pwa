@@ -30,6 +30,9 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div style="margin: 0 auto;">
+      <button onClick="subscribe()">subscribe</button>
+    </div>
     <div id="root"></div>
     <!--
       This HTML file is a template.
@@ -62,19 +65,27 @@
           
       }
       
-      if ('Notification' in window) {
-        Notification.requestPermission().then(function(permission) {
-          if (permission === 'granted') {
-            swRegistration.pushManager.subscribe({
-              userVisibleOnly: true,
-              applicationServerKey: urlBase64ToUint8Array(process.env.REACT_APP_PUBLIC_VAPID_KEY),
-            }).then(function(subscription) {
-              console.log('Subscribed to push notifications:', subscription);
-            }).catch(function(error) {
-              console.error('Failed to subscribe to push notifications:', error);
-            });
-          }
-        });
+      // if ('Notification' in window) {
+      //   Notification.requestPermission().then(function(permission) {
+      //     if (permission === 'granted') {
+      //       swRegistration.pushManager.subscribe({
+      //         userVisibleOnly: true,
+      //         applicationServerKey: urlBase64ToUint8Array(process.env.REACT_APP_PUBLIC_VAPID_KEY),
+      //       }).then(function(subscription) {
+      //         console.log('Subscribed to push notifications:', subscription);
+      //       }).catch(function(error) {
+      //         console.error('Failed to subscribe to push notifications:', error);
+      //       });
+      //     }
+      //   });
+      // }
+      async function subscribe() {
+        let sw = await navigator.serviceWorker.ready;
+        let push = await sw.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: 'BCuSL5HShzvtb2ZtYEVAEcKrrPioUqPUsltjWkHqcRgVWB1t2hIaXyuDgyqFk',
+        })
+        console.log(JSON.stringify(push));
       }
 
     </script>

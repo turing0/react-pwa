@@ -18,9 +18,6 @@ function App() {
   return (
 
     <div className='App'>
-      <div>
-        <button>sub</button>
-      </div>
 
       <div style={{marginTop:'40px',justifyContent:'space-around',display:'flex',flexWrap:'wrap', width:'90%', margin:'auto'}}>
       
