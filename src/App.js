@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 import { useEffect, useState } from 'react';
 import { getAllPokemonList } from './api/pokemon';
@@ -14,8 +14,15 @@ function App() {
     fetchData();
   },[])
 
+
   return (
-    <div style={{marginTop:'40px',justifyContent:'space-around',display:'flex',flexWrap:'wrap', width:'90%', margin:'auto'}}>
+
+    <div className='App'>
+      <div>
+        <button>sub</button>
+      </div>
+
+      <div style={{marginTop:'40px',justifyContent:'space-around',display:'flex',flexWrap:'wrap', width:'90%', margin:'auto'}}>
       
       {pokemonData?.map((poke,i) => {
         return (
@@ -31,6 +38,9 @@ function App() {
 
       </div>
     </div>
+    </div>
+
+    
   );
 }
 

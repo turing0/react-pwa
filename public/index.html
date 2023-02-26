@@ -15,6 +15,8 @@
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <script src="%PUBLIC_URL%/notification.js"></script>
+    <script src="%PUBLIC_URL%/subscribepush.js"></script>
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -41,14 +43,40 @@
     -->
     <script>
       if('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('./serviceWorker.js').then((reg) => {
-            console.log('Worker Registered')
-          }).catch((err) => {
-            console.log('Error in service worker registration.')
+          window.addEventListener('load', () => {
+            navigator.serviceWorker.register('./serviceWorker.js')
+            .then((registration) => {
+              // registration.pushManager.subscribe({
+              //   userVisibleOnly: true,
+              //   applicationServerKey: urlBase64ToUint8Array(process.env.REACT_APP_PUBLIC_VAPID_KEY),
+              // })
+              // .then(subscription => {
+              //   console.log('User subscribed:', subscription);
+              // });
+              console.log('Worker Registered');
+              console.log(registration);
+            }).catch((err) => {
+              console.log('Error in service worker registration.')
+            })
           })
-        })
+          
       }
+      
+      if ('Notification' in window) {
+        Notification.requestPermission().then(function(permission) {
+          if (permission === 'granted') {
+            swRegistration.pushManager.subscribe({
+              userVisibleOnly: true,
+              applicationServerKey: urlBase64ToUint8Array(process.env.REACT_APP_PUBLIC_VAPID_KEY),
+            }).then(function(subscription) {
+              console.log('Subscribed to push notifications:', subscription);
+            }).catch(function(error) {
+              console.error('Failed to subscribe to push notifications:', error);
+            });
+          }
+        });
+      }
+
     </script>
   </body>
 </html>
